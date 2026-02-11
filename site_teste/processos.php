@@ -1,12 +1,45 @@
-<?php 
-if ($_POST){
-    $nome = $_POST['CPF'];
-    $tamanho = strlen((string)$nome);
-    if ($tamanho != 11) {
-        echo "valor inválido! o CPF deve conter 11 digítos";
-    } else {
-    print "Com base no CPF: $nome";
-    echo "<br> Encontramos os seguintes dados <br> RG:8566712 <br> Numero: 91988342561 <br>";
-    }
+<!DOCTYPE html>
+<html lang="Pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>resultados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <header>Resultado do formulário pet </header>
+
+    <main>
+    <?php
+    //Get captando os valores do formulário
+    $nome_pet = $_POST["NomePet"] ?? null; 
+    $id_pet = $_POST["IdDoPet"] ?? null;
+    $data_nascimento_pet = $_POST["IdadePet"] ?? null;
     
-}?>
+    //Calculo para descobrir a idade do cachorro com base na data de nascimento do cachorro    
+    $dataBR = date("d/m/Y", strtotime($data_nascimento_pet));
+    $dataNascimento =new DateTime($data_nascimento_pet);
+    $today = new DateTime();
+    $diff = $today ->diff($dataNascimento);
+    $meses = ($diff->y *12) + $diff ->m;
+
+    // Verificação de valores vazios 
+    if( 
+       empty($nome_pet) ||
+       !is_numeric($id_pet) ||
+       empty($data_nascimento_pet) 
+    ) {
+       echo "Erros: Dados inválidos, insira novamente";
+       exit; 
+    }
+
+    echo "<p1>Seja bem vindo ao pet-shop raposo, $nome_pet <br></p1>";
+    echo "<p1>Seus dados são RG:$id_pet e a idade é:$meses meses </p1>";
+     ?>
+
+
+    </main>
+</body>
+</html>
+
+
