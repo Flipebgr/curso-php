@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="Pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devide-witdht, initial-scale-1.0">
+    <title>Formulários</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header>
+        <h1>1° Formulário - Teste</h1>
+    </header>
+    <section>
+        <form action="cad.php" method="get">
+            <!--action: para onde os dados irão.
+            method: O método em como os dados irão ser enviados-->
+
+
+            <label for="nome_id">First name</label>
+            <input type="text" name="nome" id="nome_id">
+
+            <label for="last_name_id">Last name</label>
+            <input type="text" name="sobrenome" id="last_name_id">
+            <!--No label, o "for" deve ter o mesmo valor do id do input.
+            Assim, ao clicar no texto do label, o cursor já vai para o input
+
+            o label apenas melhora a usabilidade e acessibidade
+            -->
+
+            <input type="submit" value="Enviar">
+        </form>
+
+    </section>
+</body>
+
+</html>
