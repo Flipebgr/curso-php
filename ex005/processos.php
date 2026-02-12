@@ -40,7 +40,7 @@
             break;
     }
 
-    //
+    //Operador ternário
     $valorDivisao = ($valor2 === 0)?"Divisão inválida - insira um valor diferente de zero":"Divisão válida";
 
     echo "<br> $valorDivisao";
