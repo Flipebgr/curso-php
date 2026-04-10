@@ -1,0 +1,2 @@
+# Esse site é um site básico, que possui um sistema de login, sistema de autenticação simples, verificando user e senha, e por fim processando o dashboard.
+# Comparada com a versão antiga, que era um site que tinha apenas um formulário simples, ouve uma evolução significativa. Pude aprender a respeito de conexões entre arquivos, organização de pastas, sistema de session_start() e $_SESSION. 

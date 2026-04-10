@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang = "pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title> server teste </title>
+     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <header>
-    <h1>2° Formulário - Operadores aritméticos</h1>
-    </header>
 
-    <section>
-        <form action="processos.php" method="post">
+<form action="/cursophp/site_teste/actions/processos_formulario.php" method="post">
             <label for="nome_pet">Nome do pet</label>
             <input type="text" name="NomePet" id="nome_pet">
 
@@ -24,6 +14,3 @@
 
             <input type="submit" value="Enviar"> 
         </form>
-    </section>
-</body>
-</html>
