@@ -11,8 +11,12 @@
         <?php 
         $escolha = $_POST["escolha"];
         // Retorno do formulário com a escolha da operação pelo usuário
-    
-        $valores= [$_POST["value1"], $_POST["value2"], $_POST["value3"]];
+
+        $value1 = $_POST["value1"];
+        $value2 = $_POST["value2"];
+        $value3 = $_POST["value3"];
+
+        $valores= [$value1, $value2, $value3];
         //Definição de uma array com os valores, para manipular melhor
 
 
@@ -52,8 +56,8 @@ if($escolha == 1 ){
         $max = max($valores);
         $min = min($valores);
 
-        echo "A função max() serve para retornar o maior valor de um array. O maior valor entre $valores é: $max <br>";   
-        echo "A função min() serve para retornar o menor valor de um array. O menor valor entre $valores é: $min <br>";
+        echo "A função max() serve para retornar o maior valor de um array. O maior valor do array é: $max <br>";   
+        echo "A função min() serve para retornar o menor valor de um array. O menor valor do array é: $min <br>";
 }
         ?>
 </body>
