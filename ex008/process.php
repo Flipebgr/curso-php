@@ -27,15 +27,19 @@
         $divisao = $value1 / $value2;
         $mod = $value1 % $value2;
 
-if($escolha == 1 ){
         if( empty($value1) || !isset($value2) || $value2 == '' || empty($value3) ){
             // A exclamação (!) antes do isset é usada para verificar se a variável não existe OU se ela existe, mas está vazia.
             // A diferença para o empty é que o empty verifica se uma variável é vazia ->
             echo "Erro: Os dados são inválidos, não se pode deixar os valores vazios <br>";
             echo "Insira valores válidos e tente novamente";
             } else {
-
-                if ($value2 == 0) {
+                if($escolha == 1 ){
+                    if ($value2 === 0)
+                    // A diferença de utilizar "==" para "===" é que o primeiro verificar apenas o valor, e não o tipo, enquanto o segundo verifica tipo e valor. 
+                    //No caso da divisão, o valor zero é o que causa o erro, independente do tipo, por isso o "==" é mais adequado.
+                    //Se um valor estiver entre aspas, o PHP converte ele para o seu número respectivo, desse modo, se usar o "==" ele irá considerar o valor, mesmo o tipo sendo string
+                    //Tal problema não acontece se usarmos ===
+                    {
                     echo "Erro: Não é possível dividir por zero. <br>";
                     echo "Insira valores válidos e tente novamente <br>";
                 } else {
@@ -46,18 +50,22 @@ if($escolha == 1 ){
                     echo "A divisão dos valores é: $divisao <br>";
                     echo "O módulo dos valores é: $mod <br>";
                     } 
-        }
-} elseif($escolha == 2){
+        } elseif ($escolha == 2) {
         echo "A função abs() serve para retornar o valor absoluto de um número. O valor absoluto de $subtracao é:" . abs($subtracao) . "<br>";
         echo "A função round() serve para arredondar um número. O valor arredondado de $divisao é:" . round($divisao, 2) . "<br>";
         echo "A função floor() serve para arredondar um número para baixo. O valor arredondado para baixo de $multiplicacao é:" . floor($multiplicacao) . "<br>";
         echo "A função ceil() serve para arredondar um número para cima. O valor arredondado para cima de $multiplicacao é:" . ceil($multiplicacao) . "<br>";
         echo "A função sqrt() serve para retornar a raiz quadrada de um número. A raiz quadrada de $soma é:" . sqrt($soma) . "<br>";
+
         $max = max($valores);
         $min = min($valores);
 
         echo "A função max() serve para retornar o maior valor de um array. O maior valor do array é: $max <br>";   
         echo "A função min() serve para retornar o menor valor de um array. O menor valor do array é: $min <br>";
+} else{
+    echo "Erro: Só existem duas opções de escolha, reinicie o processo e escolha corretamente! <br>";
+    echo "Insira valores válidos e tente novamente <br>";
+}
 }
         ?>
 </body>
