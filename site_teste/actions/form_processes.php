@@ -11,6 +11,27 @@
 
     <main>
     <?php
+
+   $tipo_de_acesso = $_POST["acesso"] ?? null;
+   $lista_de_funcionarios = [];
+   $lista_de_pets = [];
+
+   if($tipo_de_acesso == 1) {
+      echo "seja bem vindo cliente, aqui você pode castrar seu pet, comprar produtos, ter pet-shop e muito mais";
+   }elseif($tipo_de_acesso == 2){
+      echo "seja bem vindo funcionário, aqui você pode gerenciar o pet-shop e realizar diversas atividades";
+
+      
+   }else{
+      echo "Errto: Tipo de acesso inválido, insira novamente";
+   }
+
+
+
+
+
+
+
     //Get captando os valores do formulário
     $nome_pet = $_POST["NomePet"] ?? null; 
     $id_pet = $_POST["IdDoPet"] ?? null;

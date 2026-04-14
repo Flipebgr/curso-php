@@ -1,8 +1,9 @@
 <head>
-     <link rel="stylesheet" href="../css/style.css">
+     <link rel="stylesheet" href="../public/style.css">
 </head>
-
-<form action="/cursophp/site_teste/actions/processos_formulario.php" method="post">
+   <header>Registre o seu pet </header>
+     <main>
+     <form action="/cursophp/site_teste/actions/processos_formulario.php" method="post">
             <label for="nome_pet">Nome do pet</label>
             <input type="text" name="NomePet" id="nome_pet">
 
@@ -13,4 +14,5 @@
             <input type="date" name="IdadePet" id="idade_pet">
 
             <input type="submit" value="Enviar"> 
-        </form>
+        </form>     
+     </main>
