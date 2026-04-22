@@ -4,13 +4,15 @@ $customers = [
         'name'         => 'joao',
         'email'        => 'joao@email.com',
         'password'     => password_hash('1234', PASSWORD_DEFAULT),
-        'nivel_acesso' => 'customer'
+        'nivel_acesso' => 'customer',
+        'id' => 1
     ],
     [
         'name'         => 'admin',
         'email'        => 'admin@email.com',
         'password'     => password_hash('admin123', PASSWORD_DEFAULT),
-        'nivel_acesso' => 'admin'
+        'nivel_acesso' => 'customer',
+        'id' => 2
     ],
 ];
 ?>
