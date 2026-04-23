@@ -28,16 +28,14 @@ if (!$username || !$password) {
     echo "Preencha todos os campos.";
     exit;
 }
+
 foreach ($customers as $customer) {
     if ($username == $customer["name"]) {        // 1° achou o nome
         if (password_verify($password, $customer["password"])) {  // 2° verifica a senha
             $_SESSION["usuario"] = $customer["name"];
             $_SESSION["nivel"]   = $customer["nivel_acesso"];
             $_SESSION["id"] = $customer["id"];
-
-            if ($customer["nivel_acesso"] == "admin") {
-                header("Location: ../pages/admin.php");
-            } 
+            header("Location: ../pages/customer.php"); 
             exit;
         } else {
             // achou o nome mas senha errada
@@ -47,7 +45,7 @@ foreach ($customers as $customer) {
     }
 } 
 foreach ($employees as $employee) {
-    if ($username == $employee["name"] && password_verify($password, $employee["password"]) && $employee["nivel_acesso" == "employee"]) {
+    if ($username == $employee["name"] && password_verify($password, $employee["password"]) && $employee["nivel_acesso"] == "employee") {
         $_SESSION["usuario"] = $employee["name"];
         $_SESSION["nivel"]   = "employee";
         $_SESSION["id"] = $employee["id"];
@@ -75,10 +73,12 @@ foreach ($employees as $employee) {
     }
 }
 
-
-
-
 header("Location: ../pages/register.php");
+// Futuramente isso ira virar um botão, onde o cliente clica para se cadastrar, e não irá redirecionar automaticamente para a página de cadastro, mas por enquanto, para fins de teste, ele irá redirecionar automaticamente para a página de cadastro caso o usuário não tenha uma conta ou tenha digitado um nome de usuário ou senha incorretos.
+// Dessa forma, o usuário será redirecionado para a página de login, onde lá irá ter o botão de cadastro, e caso ele clique,
+// irá redirecionar para a página de cadastro, onde ele irá preencher os campos necessários para se cadastrar, e após isso, ele irá redirecionar para a página de login novamente, onde ele irá digitar o nome de usuário e senha que ele acabou de criar, e caso esteja correto, ele irá redirecionar para a página de dashboard do cliente ou funcionário.
+// Caso ele não clique, mas entre com um usuário ou senha inexistentes, ele será redirecionado para o cadastro, onde ele irá preencher os campos necessários para se cadastrar, e após isso, ele irá redirecionar para a página de login novamente, onde ele irá digitar o nome de usuário e senha que ele acabou de criar, e caso esteja correto, ele irá redirecionar para a página de dashboard do cliente ou funcionário, dependendo do nível de acesso que ele escolheu ao se cadastrar.
+// O nível de acesso é pré-definido para o cliente, independente do cadastro. Apenas que tem o nível de acesso que é adicionado na mão é a do funcionári e do admin
 exit;
 
 
