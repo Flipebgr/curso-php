@@ -29,6 +29,9 @@ unset($_SESSION['erros']);
             <label for="name">Nome</label>
             <input type="text" name="name" id="name">
 
+            <label for="user">User</label>
+            <input type="text" name="user" id="user">
+
             <label for="email">Email</label>
             <input type="email" name="email" id="email">
 

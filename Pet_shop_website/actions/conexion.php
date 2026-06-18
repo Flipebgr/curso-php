@@ -19,4 +19,13 @@ try { $dns = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4"
     exit;
 }
 }
+
+function excluirRegistro(PDO $pdo, string $tabela, int $id): bool {
+    $sql = "DELETE FROM $tabela WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([':id' => $id]);
+}
+
+
+
 ?>
