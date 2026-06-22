@@ -17,7 +17,7 @@ function conectarBanco(): PDO {
         return $pdo;
 
     } catch (PDOException $e) {
-        // Em produção: substituir o echo por error_log() e exibir mensagem genérica
+        // ⚠️  Em produção: substituir o echo por error_log() e exibir mensagem genérica
         // error_log($e->getMessage()); 
         // echo "Erro interno. Tente novamente mais tarde.";
         echo "Erro ao conectar ao banco: " . $e->getMessage();
