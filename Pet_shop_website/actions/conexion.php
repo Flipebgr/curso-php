@@ -37,4 +37,18 @@ function excluirRegistro(PDO $pdo, string $tabela, int $id): bool {
     return $stmt->execute([':id' => $id]);
 }
 
+function buscarCustomers(PDO $pdo): array {
+    $sql = "SELECT * FROM customers";
+    $stmt = $pdo->query($sql);
+
+    return $stmt->fetchAll();
+}
+
+function buscarEmployees(PDO $pdo): array {
+    $sql = "SELECT * FROM employees";
+    $stmt = $pdo->query($sql);
+
+    return $stmt->fetchAll();
+}
+
 ?>
