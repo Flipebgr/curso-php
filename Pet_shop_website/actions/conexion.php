@@ -4,28 +4,37 @@ define('DB_NAME', 'pet_shop_website');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-function conectarBanco(): PDO { // O tipo de retorno é PDO, que é a classe usada para manipular conexões com bancos de dados em PHP.
-try { $dns = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
-        $pdo = new PDO($dns, DB_USER, DB_PASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Configura o PDO para lançar exceções em caso de erros, facilitando a depuração e o tratamento de erros.
+function conectarBanco(): PDO {
+    try {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+
+        $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,  // Lança exceções em erros SQL
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,        // Retorna arrays associativos por padrão
+            PDO::ATTR_EMULATE_PREPARES   => false,                   // Usa prepared statements reais do MySQL (mais seguro)
+        ]);
+
         return $pdo;
 
-} catch (PDOException $e) {
-    echo "Erro ao conectar ao banco de dados: " . $e->getMessage(); // Brecha de segurança, não exibir detalhes do erro em produção
-    // Estou mostrando apenas para teste a aprendizado, mas em um ambiente de produção, é recomendado logar o erro em um arquivo de log e exibir uma mensagem genérica para o usuário.
-    exit;
-} catch (Exception $e) {
-    echo "Erro inesperado: " . $e->getMessage();
-    exit;
-}
+    } catch (PDOException $e) {
+        // Em produção: substituir o echo por error_log() e exibir mensagem genérica
+        // error_log($e->getMessage()); 
+        // echo "Erro interno. Tente novamente mais tarde.";
+        echo "Erro ao conectar ao banco: " . $e->getMessage();
+        exit;
+    }
 }
 
 function excluirRegistro(PDO $pdo, string $tabela, int $id): bool {
-    $sql = "DELETE FROM $tabela WHERE id = :id";
+    $tabelasPermitidas = ['customers', 'employees'];  // <- adicione novas tabelas aqui conforme o projeto crescer
+
+    if (!in_array($tabela, $tabelasPermitidas, strict: true)) {
+        throw new InvalidArgumentException("Tabela '$tabela' não permitida.");
+    }
+
+    $sql  = "DELETE FROM $tabela WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([':id' => $id]);
 }
-
-
 
 ?>

@@ -17,7 +17,7 @@
 
         <input type="submit" value="Entrar">
     </form>
-    <h2>se você não tem uma conta, <a href="../Pet_shop_website/pages/register.php">cadastre-se</a></h2>
+    <h2>se você não tem uma conta <a href="../Pet_shop_website/pages/register.php">cadastre-se</a></h2>
 
     
 </body>

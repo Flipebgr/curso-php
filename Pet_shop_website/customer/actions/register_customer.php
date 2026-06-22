@@ -44,7 +44,7 @@ $novo_cliente = [
 $pdo = conectarBanco();
 
 function criarUsuario(PDO $pdo, string $name, string $user, string $email, string $passwordHash, int $nivel_de_acesso): bool {
-    $sql  = "INSERT INTO customer (name, user, email, password, nivel_de_acesso) VALUES (:name, :user, :email, :password, :nivel_de_acesso)";
+    $sql  = "INSERT INTO customers (name, user, email, password, nivel_de_acesso) VALUES (:name, :user, :email, :password, :nivel_de_acesso)";
     $stmt = $pdo->prepare($sql);
 
     return $stmt->execute([  

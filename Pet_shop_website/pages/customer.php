@@ -11,7 +11,7 @@ $_SESSION['id'] = $_SESSION['id'] ?? null; // Aqui estou salvando o ID do client
 
 
 
-
+echo "<h1>Bem vindo, cliente de ID: " . htmlspecialchars($_SESSION['id'], ENT_QUOTES, 'UTF-8') . "</h1>"; // Exibindo o ID do cliente logado, apenas para teste. Em um ambiente de produção, é recomendado exibir o nome do cliente ou outras informações mais amigáveis, em vez do ID.
 
 
 ?>
