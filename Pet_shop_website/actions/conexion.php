@@ -37,18 +37,27 @@ function excluirRegistro(PDO $pdo, string $tabela, int $id): bool {
     return $stmt->execute([':id' => $id]);
 }
 
-function buscarCustomers(PDO $pdo): array {
-    $sql = "SELECT * FROM customers";
-    $stmt = $pdo->query($sql);
+function buscarUsuarioPorLogin(PDO $pdo, string $email): array|false {
+    $sql = "SELECT id, name, email, password, nivel_de_acesso, tipo_usuario
+        FROM customers
+        WHERE email = :email1
 
-    return $stmt->fetchAll();
-}
+        UNION
 
-function buscarEmployees(PDO $pdo): array {
-    $sql = "SELECT * FROM employees";
-    $stmt = $pdo->query($sql);
+        SELECT id, name, email, password, nivel_de_acesso, tipo_usuario
+        FROM employees
+        WHERE email = :email2
 
-    return $stmt->fetchAll();
+        LIMIT 1
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':email1' => $email,
+        ':email2' => $email,
+    ]);
+
+    return $stmt->fetch();
 }
 
 ?>

@@ -3,79 +3,58 @@ session_start();
 
 require_once __DIR__ . "/conexion.php";
 
-$username = trim($_POST["username"] ?? "");
+$email = trim($_POST["username"] ?? ""); //trim faz a limpeza inicial e final da string, removendo espaços em branco, quebras de linha, etc.
 $password = $_POST["password"] ?? "";
 
-if ($username === "" || $password === "") {
+if ($email === "" || $password === "") {
     echo "Preencha todos os campos.";
     exit;
 }
 
-function loginEncontrado(array $registro, string $username, array $campos): bool {
-    foreach ($campos as $campo) {
-        if (isset($registro[$campo]) && $registro[$campo] === $username) {
-            return true;
-        }
-    }
+const REDIRECIONAMENTOS = [
+    1 => '../pages/customer.php',
+    2 => '../pages/employee.php',
+    3 => '../pages/admin.php',
+];
 
-    return false;
+
+function iniciarSessao(array $usuario): void {
+    // Tudo vem do BD 
+    $_SESSION['usuario']       = $usuario['name'];
+    $_SESSION['nivel']         = (int) $usuario['nivel_de_acesso'];
+    $_SESSION['tipo_usuario']  = $usuario['tipo_usuario']; // vem do BD agora
+    $_SESSION['id']            = $usuario['id'];
 }
 
-function iniciarSessao(array $usuario, string $tipo): void {
-    $_SESSION["usuario"] = $usuario["name"];
-    $_SESSION["nivel"] = (int) $usuario["nivel_de_acesso"];
-    $_SESSION["tipo_usuario"] = $tipo;
-    $_SESSION["id"] = $usuario["id"];
+// --- Fluxo principal ---
+$pdo     = conectarBanco();
+$usuario = buscarUsuarioPorLogin($pdo, $email);
+
+// Usuário não existe
+if (!$usuario) {
+    // Mensagem genérica: não revele se foi o usuário ou a senha que falhou
+    // (OWASP recomenda isso para evitar enumeração de usuários)
+    echo "Usuário ou senha incorretos. Tente novamente.";
+    exit;
 }
 
-$pdo = conectarBanco();
-$customers = buscarCustomers($pdo);
-$employees = buscarEmployees($pdo);
-
-foreach ($customers as $customer) {
-    if (loginEncontrado($customer, $username, ["user", "name", "email"])) {
-        if (!password_verify($password, $customer["password"])) {
-            echo "Usuario ou senha incorreta. Tente novamente.";
-            exit;
-        }
-
-        if ((int) $customer["nivel_de_acesso"] === 1) {
-            iniciarSessao($customer, "customer");
-            header("Location: ../pages/customer.php");
-            exit;
-        }
-
-        echo "Nivel de acesso invalido para cliente.";
-        exit;
-    }
+// Senha incorreta
+if (!password_verify($password, $usuario['password'])) {
+    echo "Usuário ou senha incorretos. Tente novamente.";
+    exit;
 }
 
-foreach ($employees as $employee) {
-    if (loginEncontrado($employee, $username, ["name", "email"])) {
-        if (!password_verify($password, $employee["password"])) {
-            echo "Usuario ou senha incorreta. Tente novamente.";
-            exit;
-        }
+$nivel = (int) $usuario['nivel_de_acesso'];
 
-        $nivelDeAcesso = (int) $employee["nivel_de_acesso"];
-
-        if ($nivelDeAcesso === 2) {
-            iniciarSessao($employee, "employee");
-            header("Location: ../pages/employee.php");
-            exit;
-        }
-
-        if ($nivelDeAcesso === 3) {
-            iniciarSessao($employee, "admin");
-            header("Location: ../pages/admin.php");
-            exit;
-        }
-
-        echo "Nivel de acesso invalido para funcionario.";
-        exit;
-    }
+// Nível não mapeado (dado inválido no BD)
+if (!isset(REDIRECIONAMENTOS[$nivel])) {
+    error_log("Login: nivel_de_acesso inválido para usuário ID " . $usuario['id']);
+    echo "Erro de configuração. Contate o administrador.";
+    exit;
 }
 
-echo "Usuario ou senha incorreta. Tente novamente.";
+// Tudo válido: inicia sessão e redireciona
+iniciarSessao($usuario);
+header("Location: " . REDIRECIONAMENTOS[$nivel]);
 exit;
 ?>
